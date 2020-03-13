@@ -1,0 +1,65 @@
+<div class="container-fluid">
+
+  <div class="row page-title">
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      <a href="<%= Rho::Application.startURI %>" class="btn btn-default btn-sm pull-left">Home</a>
+    </div>
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+      <h3 class="text-center">Share example</h3>
+    </div>
+  </div>
+
+ <br>
+ <br>
+
+  <div>
+    <a href="<%= url_for :action => :share_file %>" >Share file from Ruby</a>
+  </div>
+
+  <br>
+
+  <div>
+    <a href="" onClick="onShareFile();">Share file from JS</a>
+  </div>
+
+
+
+</div>
+
+
+
+
+<script type="text/javascript">
+
+
+function onShareFile() {
+
+    var uri_prefix = "content://";
+
+    // this is application package !
+    var uri_id = "com.tau.sharefile";
+    var uri_path_prefix = "/rhodata/apps";
+
+    // this is path from User folders
+    // we recommend store files in User folder
+    // User folder = Rho.RhoApplication.userFolder
+    // in this case we do not place file into User folder but direct link file from "app" folder. On Android User folder is the same with root of application's files where located "app" folder
+    uri_file_path = "/app/Share/from_js.png";
+
+    uri = uri_prefix + uri_id + uri_path_prefix + uri_file_path;
+
+    var intentParams = {
+      action : "android.intent.action.SEND",
+      data : {"android.intent.extra.STREAM" : uri},
+      intentType : Rho.Intent.START_ACTIVITY,
+      mimeType : "image/*",
+      uri : "android.intent.category.DEFAULT"
+      }
+
+    Rho.Intent.send(intentParams);
+
+    return false;
+}
+
+
+</script>
